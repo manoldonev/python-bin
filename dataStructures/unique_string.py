@@ -1,4 +1,7 @@
 
+"""Unique String Package"""
+
+
 def unique(s):
     """Implement an algorithm to determine if a string has all unique characters."""
     # O(n) time, O(n) space
@@ -21,7 +24,7 @@ def unique2(s):
 def unique3(s):
     """Implement an algorithm to determine if a string has all unique characters. What if you
     can not use additional data structures?"""
-    # O(nlogn) time, no space (quicksort)
+    # O(nlogn) time, O(n) space
     previous = None
     for char in sorted(s):
         if char == previous:
