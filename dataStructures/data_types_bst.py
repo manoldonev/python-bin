@@ -56,18 +56,46 @@ class TreeNode(object):
 
         return self.right.maximum()
 
-    def predecessor(self, key):
-        node = self.find(key)
-        if not node:
-            return None
+    def remove(self, root):
+        if self.left and self.right:
+            # we know it exists and it is max of left subtree (no left child)
+            predecessor = self.predecessor()
+            # swap node-to-remove with its predecessor
+            self.key, predecessor.key = predecessor.key, self.key
+            # remove predecessor (no left child for sure => simpler case)
+            predecessor.remove(root)
+        elif self.left:
+            if self == root:
+                root = self.left
+            elif self.parent.left == self:
+                self.parent.left = self.left
+            else:
+                self.parent.right = self.left
+        elif self.right:
+            if self == root:
+                root = self.right
+            elif self.parent.left == self:
+                self.parent.left = self.right
+            else:
+                self.parent.right = self.right
+        else:
+            if self == root:
+                root = None
+            elif self.parent.left == self:
+                self.parent.left = None
+            else:
+                self.parent.right = None
 
-        if node.left:
-            return node.left.maximum()
+        return root
+
+    def predecessor(self):
+        if self.left:
+            return self.left.maximum()
 
         predecessor = None
-        current = node.parent
+        current = self.parent
         while current:
-            if current.key < key:
+            if current.key < self.key:
                 predecessor = current
                 break
 
@@ -75,18 +103,14 @@ class TreeNode(object):
 
         return predecessor
 
-    def successor(self, key):
-        node = self.find(key)
-        if not node:
-            return None
-
-        if node.right:
-            return node.right.minimum()
+    def successor(self):
+        if self.right:
+            return self.right.minimum()
 
         successor = None
-        current = node.parent
+        current = self.parent
         while current:
-            if current.key > key:
+            if current.key > self.key:
                 successor = current
                 break
 
@@ -115,7 +139,16 @@ class BinarySearchTree(object):
 
         return self.root.insert(key)
 
-    def find_node(self, key):
+    def remove(self, key):
+        node = self.find(key)
+        if not node:
+            return
+
+        self.root = node.remove(self.root)
+
+        return self.root
+
+    def find(self, key):
         if not self.root:
             return None
 
@@ -134,13 +167,15 @@ class BinarySearchTree(object):
         return self.root.maximum()
 
     def predecessor(self, key):
-        if not self.root:
+        node = self.find(key)
+        if not node:
             return None
 
-        return self.root.predecessor(key)
+        return node.predecessor()
 
     def successor(self, key):
-        if not self.root:
+        node = self.find(key)
+        if not node:
             return None
 
-        return self.root.successor(key)
+        return node.successor()
