@@ -1,7 +1,7 @@
 
 """Balanced Tree Package"""
 
-from data_types_bst import BinaryTreeNode
+from dataStructures.data_types_bst import BinaryTreeNode
 
 
 def is_balanced(root):
