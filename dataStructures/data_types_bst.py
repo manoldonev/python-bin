@@ -122,8 +122,8 @@ class BinaryTreeNode(object):
 class BinarySearchTree(object):
     """Binary Search Tree"""
 
-    def __init__(self):
-        self.root = None
+    def __init__(self, root=None):
+        self.root = root
 
     def __iter__(self):
         if not self.root:
