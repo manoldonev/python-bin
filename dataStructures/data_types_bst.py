@@ -2,7 +2,7 @@
 """Data Types Tree Package"""
 
 
-class TreeNode(object):
+class BinaryTreeNode(object):
     """Tree Node"""
 
     def __init__(self, key, parent=None):
@@ -23,12 +23,12 @@ class TreeNode(object):
     def insert(self, key):
         if self.key >= key:
             if not self.left:
-                self.left = TreeNode(key, self)
+                self.left = BinaryTreeNode(key, self)
                 return self.left
 
             return self.left.insert(key)
         elif not self.right:
-            self.right = TreeNode(key, self)
+            self.right = BinaryTreeNode(key, self)
             return self.right
         else:
             return self.right.insert(key)
@@ -134,7 +134,7 @@ class BinarySearchTree(object):
 
     def insert(self, key):
         if not self.root:
-            self.root = TreeNode(key)
+            self.root = BinaryTreeNode(key)
             return self.root
 
         return self.root.insert(key)
