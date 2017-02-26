@@ -1,7 +1,7 @@
 
 """BST from Sorted Array Package"""
 
-from data_types_bst import BinaryTreeNode
+from dataStructures.data_types_bst import BinaryTreeNode
 
 
 def bst_from_sorted_array(l):
